@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+}
+
+group 'com.snowden'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.hibernate:hibernate-core:5.1.0.Final'
+    compile 'com.h2database:h2:1.4.197'
+    compile 'org.projectlombok:lombok:1.18.0'
+}
