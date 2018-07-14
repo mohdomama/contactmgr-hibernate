@@ -29,12 +29,69 @@ public class Application {
                 .withPhone(9012367951L)
                 .build();
 
-        save(contact);
+        int id = save(contact);
 
-        //Display the contacts with stream. New feature in java
+        //Display the contacts with stream. New feature in java. (Before update)
+        System.out.println("\n\nBefore Update: \n");
+        fetchAllContacts().stream().forEach(System.out::println);
+
+        // Get the persisted contact
+        Contact c = getContactById(id);
+
+        // Update contact
+        c.setFirstName("Awesome");
+
+        // Persist changes
+        System.out.println("\nUpdating ... ");
+        updateContact(c);
+
+        // Display list after updates
+        System.out.println("\n\nAfter Update: \n");
+        fetchAllContacts().stream().forEach(System.out::println);
+
+        System.out.println("\nDeleting ... ");
+        deleteContactById(id);
+
+
+        System.out.println("\n\nAfter Delete: \n");
         fetchAllContacts().stream().forEach(System.out::println);
 
 
+
+
+    }
+
+    private static Contact getContactById(int id) {
+        Session session = sessionFactory.openSession();
+
+        Contact contact = session.get(Contact.class, id);
+
+        session.close();
+
+        return contact;
+    }
+
+    private static void deleteContactById(int id) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        session.delete(session.get(Contact.class, id));
+
+        session.getTransaction().commit();
+
+
+        session.close();
+    }
+    private static void updateContact(Contact contact) {
+        Session session = sessionFactory.openSession();
+
+        session.beginTransaction();
+
+        session.update(contact);
+
+        session.getTransaction().commit();
+
+        session.close();
     }
 
     @SuppressWarnings("unchecked")
@@ -52,7 +109,7 @@ public class Application {
         return contacts;
     }
 
-    private static void save (Contact contact) {
+    private static int save (Contact contact) {
         // Open a session
         Session session = sessionFactory.openSession();
 
@@ -60,7 +117,7 @@ public class Application {
         session.beginTransaction();
 
         // Use the session to save the contact
-        session.save(contact);
+        int id = (int) session.save(contact);
 
         // Commit the transaction
         session.getTransaction().commit();
@@ -68,5 +125,6 @@ public class Application {
         // Close the session
         session.close();
 
+        return id;
     }
 }
