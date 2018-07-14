@@ -10,7 +10,10 @@
         <!-- Create database schema on application startup-->
         <property name="hbm2ddl.auto">create</property>
 
+        <!-- Display hibernate querry-->
+
+        <property name="show_sql">true</property>
         <!-- Names of the annotated entity classes -->
-        <mapping class="com.snowden.contactmgr.model" />
+        <mapping class="com.snowden.contactmgr.model.Contact" />
     </session-factory>
 </hibernate-configuration>
