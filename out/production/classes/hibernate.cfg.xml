@@ -7,8 +7,8 @@
         <!-- SQL dialect-->
         <property name="dialect">org.hibernate.dialect.H2Dialect</property>
 
-        <!-- Create database schema on application startup-->
-        <property name="hbm2ddl.auto">create</property>
+        <!-- Update database schema on application startup-->
+        <property name="hbm2ddl.auto">update</property>
 
         <!-- Display hibernate querry-->
 
